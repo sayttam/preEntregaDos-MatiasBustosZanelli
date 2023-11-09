@@ -30,10 +30,10 @@ function limpiarCarrito() {
 function obtenerIds(productos) {
     const identificadores = new Set()
     productos.forEach(producto => {
-        identificadores.add(producto.id)
+        identificadores.add(producto.id, producto.nombre)
     })
-    const identificaoresLista = Array.from(identificadores)
-    return identificaoresLista
+    const identificadoresLista = Array.from(identificadores)
+    return identificadoresLista
 }
 
 function corregirCarrito() {
@@ -49,6 +49,7 @@ function corregirCarrito() {
 
 function quitarProductos(carrito) {
     let listaIds = obtenerIds(carrito)
+    console.log(listaIds)
     let id = prompt("Ingresa el ID del producto que quieres quitar del carrito:")
     let productoEliminado = false
     for (let i = 0; i < carritoPS.length; i++) {
@@ -113,7 +114,9 @@ function medioDePago(importe) {
 
 
 function comprar() {
-    console.table(producto)
+    if (carritoPS.length < 1) {
+        console.table(producto)
+    }
     let productoID = prompt("Ingresa el ID del producto que quieres comprar:")
     let seleccion = buscarProducto(parseInt(productoID))
     if (seleccion !== undefined) {
@@ -123,6 +126,11 @@ function comprar() {
             comprar()
         } else {
             corregirCarrito()
+            if (carritoPS.length < 1) {
+                alert("No tienes ningun artículo en el carrito")
+                console.log("No tienes ningun artículo en el carrito")
+                comprar()
+            }
             const procesarCarrito = new Compra(carritoPS)
             let importePago = procesarCarrito.calcularImporte()
             importePago = (medioDePago(importePago)).toFixed(0)
