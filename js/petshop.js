@@ -113,6 +113,7 @@ function medioDePago(importe) {
 
 
 function comprar() {
+    console.table(producto)
     let productoID = prompt("Ingresa el ID del producto que quieres comprar:")
     let seleccion = buscarProducto(parseInt(productoID))
     if (seleccion !== undefined) {
